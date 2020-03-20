@@ -28,3 +28,9 @@ $MAKE \
 	LDIR=lua \
 	CDIR=. \
 	mingw install
+
+cp -v $LUAJIT_DIR/COPYRIGHT $MPV_FILES/LUAJIT-LICENSE
+cp -v $LUASOCKET_DIR/LICENSE $MPV_FILES/LUASOCKET-LICENSE
+
+# cd $MPV_FILES
+# tar -zcvf $WD/mpv.tar.gz *
