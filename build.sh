@@ -10,24 +10,28 @@ mkdir -p $LUA_DIR
 mkdir -p $MPV_FILES
 
 # build luajit
-cd $LUAJIT_DIR
+$MAKE -C $LUAJIT_DIR clean
+$MAKE -C $LUAJIT_DIR \
+  CC='gcc -m64' \
+  PREFIX=$LUA_DIR \
+  TARGET_SYS=Windows \
+  BUILDMODE=dynamic \
+  CFLAGS='-D_WIN32_WINNT=0x0602 -DLUASOCKET_INET_PTON' \
+  XCFLAGS='-DLUAJIT_ENABLE_LUA52COMPAT -DLUAJIT_DISABLE_JIT -DLUAJIT_ENABLE_GC64' \
+  install
 
-$MAKE clean
-$MAKE PREFIX=$LUA_DIR TARGET_SYS=Windows BUILDMODE=dynamic install
 cp $LUAJIT_DIR/src/lua51.dll $MPV_FILES
 
 # build luasocket
-cd $LUASOCKET_DIR
-
-$MAKE clean
-$MAKE \
-	PLAT=mingw \
-	LUAINC_mingw=$LUA_DIR/include/luajit-2.0 \
-	LUALIB_mingw=$MPV_FILES/lua51.dll \
-	LUAPREFIX_mingw=$MPV_FILES \
-	LDIR=lua \
-	CDIR=. \
-	mingw install
+$MAKE -C $LUASOCKET_DIR clean
+$MAKE -C $LUASOCKET_DIR \
+  PLAT=mingw \
+  LUAINC_mingw=$LUA_DIR/include/luajit-2.1 \
+  LUALIB_mingw=$MPV_FILES/lua51.dll \
+  LUAPREFIX_mingw=$MPV_FILES \
+  LDIR=lua \
+  CDIR=. \
+  mingw install
 
 cp -v $LUAJIT_DIR/COPYRIGHT $MPV_FILES/LUAJIT-LICENSE
 cp -v $LUASOCKET_DIR/LICENSE $MPV_FILES/LUASOCKET-LICENSE
