@@ -28,6 +28,7 @@ $MAKE -C $LUASOCKET_DIR \
   PLAT=mingw \
   LUAINC_mingw=$LUA_DIR/include/luajit-2.1 \
   LUALIB_mingw=$MPV_FILES/lua51.dll \
+  DEF_mingw=-DWINVER=0x0602 \
   LUAPREFIX_mingw=$MPV_FILES \
   LDIR=lua \
   CDIR=. \
