@@ -3,4 +3,4 @@
 	url = https://github.com/diegonehab/luasocket
 [submodule "luajit"]
 	path = luajit
-	url = https://github.com/LuaJIT/LuaJIT
+	url = https://github.com/openresty/luajit2
