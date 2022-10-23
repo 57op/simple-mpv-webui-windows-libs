@@ -10,13 +10,17 @@ mkdir -p $LUA_DIR
 mkdir -p $MPV_FILES
 
 # build luajit
+cd $LUAJIT_DIR
+git am --3way $WD/luajit-0001-add-win32-utf-8-filesystem-functions.patch
+cd ..
+
 $MAKE -C $LUAJIT_DIR clean
 $MAKE -C $LUAJIT_DIR \
   CC='gcc -m64' \
   PREFIX=$LUA_DIR \
   TARGET_SYS=Windows \
   BUILDMODE=dynamic \
-  CFLAGS='-D_WIN32_WINNT=0x0602 -DLUASOCKET_INET_PTON' \
+  CFLAGS='-D_WIN32_WINNT=0x0602 -DUNICODE' \
   XCFLAGS='-DLUAJIT_ENABLE_LUA52COMPAT' \
   install
 
